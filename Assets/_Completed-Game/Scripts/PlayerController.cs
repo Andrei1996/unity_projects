@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour {
             {
                 Vector3 jump = new Vector3(0.0f, jumpHeight, 0.0f);
                 GetComponent<Rigidbody>().AddForce(jump);
-                Debug.Log(isGrounded);
                 dbJump = true;
             } else
             {
@@ -64,7 +63,6 @@ public class PlayerController : MonoBehaviour {
                     dbJump = false;
                     Vector3 jump = new Vector3(0.0f, jumpHeight, 0.0f);
                     GetComponent<Rigidbody>().AddForce(jump);
-                    Debug.Log(isGrounded);
                 }
             }
         }
