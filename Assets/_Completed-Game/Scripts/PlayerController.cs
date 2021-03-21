@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight;
 	public Text countText;
 	public Text winText;
+    public bool isGrounded;
 
 	private Rigidbody rb;
 	private int count;
@@ -24,7 +25,17 @@ public class PlayerController : MonoBehaviour {
 		winText.text = "";
 	}
 
-	void FixedUpdate ()
+    private void OnCollisionStay()
+    {
+        isGrounded = true;
+    }
+
+    private void OnCollisionExit()
+    {
+        isGrounded = false;
+    }
+
+    void FixedUpdate ()
 	{
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
@@ -40,10 +51,11 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown("space"))
         {
             Debug.Log("space pressed");
-            if (GetComponent<Rigidbody>().transform.position.y <= 0.5f)
+            if (isGrounded)
             {
                 Vector3 jump = new Vector3(0.0f, jumpHeight, 0.0f);
                 GetComponent<Rigidbody>().AddForce(jump);
+                Debug.Log(isGrounded);
                 dbJump = true;
             } else
             {
@@ -52,11 +64,11 @@ public class PlayerController : MonoBehaviour {
                     dbJump = false;
                     Vector3 jump = new Vector3(0.0f, jumpHeight, 0.0f);
                     GetComponent<Rigidbody>().AddForce(jump);
+                    Debug.Log(isGrounded);
                 }
             }
         }
     }
-
 
     void OnTriggerEnter(Collider other) 
 	{
